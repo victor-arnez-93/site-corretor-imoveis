@@ -11,7 +11,7 @@
     supabaseAnonKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBwY3BnaG5xYXZnYWFrdGNqenFlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODE2MTYwNTksImV4cCI6MjA5NzE5MjA1OX0.Q3bEqxkg_lOSGYU7XzhfmO_hlixCNuWOSE_CNJt2TDA',
     organizationId: '63f45b98-5ada-4b19-a6f2-4bc68f46055e',
     organizationSlug: '',
-    adminUrl: 'https://painel.seudominio.com.br/',
+    adminUrl: 'https://victor-arnez-93.github.io/crv-imob-admin/',
     fallbackWhatsApp: '5515999999999'
   });
 
