@@ -659,6 +659,31 @@ svg {
   position: relative;
 }
 
+.properties-carousel.is-catalog-loading {
+  opacity: .48;
+  pointer-events: none;
+}
+
+.properties-carousel.is-catalog-loading::after {
+  position: absolute;
+  z-index: 10;
+  top: 48%;
+  left: 50%;
+  width: 34px;
+  height: 34px;
+  border: 3px solid rgba(4, 139, 168, .18);
+  border-top-color: var(--cyan);
+  border-radius: 50%;
+  content: "";
+  animation: catalog-loading 700ms linear infinite;
+}
+
+@keyframes catalog-loading {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 .properties-viewport {
   overflow-x: auto;
   padding: 10px 3px 26px;
@@ -1572,6 +1597,86 @@ svg {
 }
 
 /* ============================================================
+   ESTADOS DO CATÁLOGO DINÂMICO
+   ============================================================ */
+
+.catalog-state {
+  display: flex;
+  min-height: 150px;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  margin-top: 28px;
+  padding: 28px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  background: rgba(255, 255, 255, .68);
+  color: var(--blue);
+  text-align: left;
+}
+
+.catalog-state[hidden] {
+  display: none;
+}
+
+.catalog-state > svg {
+  width: 44px;
+  height: 44px;
+  flex: 0 0 auto;
+  padding: 10px;
+  border-radius: 15px;
+  background: rgba(4, 139, 168, .1);
+  color: var(--cyan);
+}
+
+.catalog-state strong {
+  font-family: var(--font-display);
+  font-size: 1rem;
+}
+
+.catalog-state p {
+  max-width: 560px;
+  margin-top: 4px;
+  color: var(--muted);
+  font-size: .76rem;
+}
+
+.property-card-loading .property-media,
+.catalog-loading-line {
+  background: linear-gradient(
+    100deg,
+    rgba(1, 25, 54, .06) 20%,
+    rgba(4, 139, 168, .13) 38%,
+    rgba(1, 25, 54, .06) 56%
+  );
+  background-size: 220% 100%;
+  animation: catalog-skeleton 1.25s linear infinite;
+}
+
+.catalog-loading-line {
+  display: block;
+  width: 100%;
+  height: 16px;
+  margin-bottom: 16px;
+  border-radius: 999px;
+}
+
+.catalog-loading-line-small {
+  width: 42%;
+  height: 10px;
+}
+
+.catalog-loading-line-medium {
+  width: 68%;
+}
+
+@keyframes catalog-skeleton {
+  to {
+    background-position-x: -220%;
+  }
+}
+
+/* ============================================================
    RESPONSIVO — SEMPRE AO FINAL DO ARQUIVO
    ============================================================ */
 
@@ -1967,6 +2072,11 @@ svg {
 
   .property-specs li {
     padding-right: 10px;
+  }
+
+  .catalog-state {
+    align-items: flex-start;
+    flex-direction: column;
   }
 
   .method-list li {

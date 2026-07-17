@@ -138,78 +138,22 @@
           <p>Explore os destaques, compare o que realmente importa e avance com segurança na sua próxima escolha.</p>
         </div>
 
-        <div class="properties-carousel reveal-up" id="propertiesCarousel" aria-label="Imóveis em destaque">
+        <div class="properties-carousel reveal-up is-catalog-loading" id="propertiesCarousel" aria-label="Imóveis em destaque">
           <button class="carousel-arrow carousel-arrow-prev" type="button" aria-label="Ver imóveis anteriores" data-carousel-prev>
             <i data-lucide="arrow-left"></i>
           </button>
 
           <div class="properties-viewport" data-carousel-viewport tabindex="0">
             <div class="property-grid" data-carousel-track>
-          <article class="property-card property-card-featured reveal-up">
-            <a class="property-media" href="detalhes/imovel1.html" aria-label="Conhecer Residência Aurora">
-              <img src="assets/img/fotocasa1.png" alt="Fachada da Residência Aurora" loading="lazy">
-              <span class="image-fallback"><i data-lucide="image"></i> fotocasa1.png</span>
-              <span class="property-index">01</span>
-              <span class="property-badge">Exclusividade</span>
-            </a>
+          <article class="property-card property-card-loading" aria-hidden="true">
+            <div class="property-media"></div>
             <div class="property-body">
-              <div class="property-location"><i data-lucide="map-pin"></i> Jardim Paulista · Tatuí/SP</div>
-              <h3><a href="detalhes/imovel1.html">Residência Aurora</a></h3>
-              <ul class="property-specs" aria-label="Características">
-                <li><strong>3</strong> suítes</li>
-                <li><strong>280 m²</strong> construídos</li>
-                <li><strong>3</strong> vagas</li>
-              </ul>
-              <div class="property-footer">
-                <div><small>Valor</small><strong>R$ 1.280.000</strong></div>
-                <a class="circle-link" href="detalhes/imovel1.html" aria-label="Ver detalhes da Residência Aurora"><i data-lucide="arrow-up-right"></i></a>
-              </div>
+              <span class="catalog-loading-line catalog-loading-line-small"></span>
+              <span class="catalog-loading-line"></span>
+              <span class="catalog-loading-line catalog-loading-line-medium"></span>
             </div>
           </article>
 
-          <article class="property-card reveal-up">
-            <a class="property-media" href="detalhes/imovel2.html" aria-label="Conhecer Casa Horizonte">
-              <img src="assets/img/fotocasa2.png" alt="Fachada da Casa Horizonte" loading="lazy">
-              <span class="image-fallback"><i data-lucide="image"></i> fotocasa2.png</span>
-              <span class="property-index">02</span>
-              <span class="property-badge">Condomínio</span>
-            </a>
-            <div class="property-body">
-              <div class="property-location"><i data-lucide="map-pin"></i> Vale Verde · Tatuí/SP</div>
-              <h3><a href="detalhes/imovel2.html">Casa Horizonte</a></h3>
-              <ul class="property-specs" aria-label="Características">
-                <li><strong>3</strong> dormitórios</li>
-                <li><strong>210 m²</strong> construídos</li>
-                <li><strong>2</strong> vagas</li>
-              </ul>
-              <div class="property-footer">
-                <div><small>Valor</small><strong>R$ 450.000</strong></div>
-                <a class="circle-link" href="detalhes/imovel2.html" aria-label="Ver detalhes da Casa Horizonte"><i data-lucide="arrow-up-right"></i></a>
-              </div>
-            </div>
-          </article>
-
-          <article class="property-card reveal-up">
-            <a class="property-media" href="detalhes/imovel3.html" aria-label="Conhecer Villa Serena">
-              <img src="assets/img/fotocasa3.png" alt="Fachada da Villa Serena" loading="lazy">
-              <span class="image-fallback"><i data-lucide="image"></i> fotocasa3.png</span>
-              <span class="property-index">03</span>
-              <span class="property-badge">Pronta para morar</span>
-            </a>
-            <div class="property-body">
-              <div class="property-location"><i data-lucide="map-pin"></i> Jardim São Paulo · Tatuí/SP</div>
-              <h3><a href="detalhes/imovel3.html">Villa Serena</a></h3>
-              <ul class="property-specs" aria-label="Características">
-                <li><strong>3</strong> dormitórios</li>
-                <li><strong>168 m²</strong> construídos</li>
-                <li><strong>2</strong> vagas</li>
-              </ul>
-              <div class="property-footer">
-                <div><small>Valor</small><strong>R$ 350.000</strong></div>
-                <a class="circle-link" href="detalhes/imovel3.html" aria-label="Ver detalhes da Villa Serena"><i data-lucide="arrow-up-right"></i></a>
-              </div>
-            </div>
-          </article>
             </div>
           </div>
 
@@ -222,6 +166,8 @@
           <div class="carousel-dots" data-carousel-dots></div>
           <span class="carousel-counter" data-carousel-counter>01 / 01</span>
         </div>
+
+        <div class="catalog-state" id="catalogState" hidden role="status" aria-live="polite"></div>
       </div>
     </section>
 
@@ -310,8 +256,8 @@
           <p>Conte o que você procura. A conversa começa sem compromisso e com a objetividade necessária para encontrar boas possibilidades.</p>
 
           <div class="contact-direct">
-            <a class="js-whatsapp" href="#" data-message="Olá! Vim pelo site e quero conversar sobre imóveis."><i data-lucide="message-circle"></i><span><small>WhatsApp</small>(15) 99999-9999</span></a>
-            <a href="mailto:contato@seudominio.com.br"><i data-lucide="mail"></i><span><small>E-mail</small>contato@seudominio.com.br</span></a>
+            <a class="js-whatsapp" href="#" data-message="Olá! Vim pelo site e quero conversar sobre imóveis."><i data-lucide="message-circle"></i><span><small>WhatsApp</small><span data-organization-phone>(15) 99999-9999</span></span></a>
+            <a href="mailto:contato@seudominio.com.br" data-organization-email><i data-lucide="mail"></i><span><small>E-mail</small><span data-contact-value>contato@seudominio.com.br</span></span></a>
           </div>
         </div>
 
@@ -347,7 +293,7 @@
       <nav aria-label="Links do rodapé"><a href="#imoveis">Imóveis</a><a href="#metodo">Como trabalho</a><a href="#sobre">Sobre</a><a href="#contato">Contato</a></nav>
     </div>
     <div class="container footer-bottom">
-      <span>© <span id="currentYear">2026</span> Lucas Almeida Imóveis. Nome e dados demonstrativos.</span>
+      <span>© <span id="currentYear">2026</span> <span data-organization-copyright>Lucas Almeida Imóveis. Nome e dados demonstrativos.</span></span>
       <a class="crv-signature" href="https://crvsolucoesti.com/" target="_blank" rel="noopener"><small>Desenvolvido por</small><strong>CRV</strong><span>Soluções em TI</span></a>
     </div>
   </footer>
@@ -359,6 +305,9 @@
   <script src="https://cdn.jsdelivr.net/npm/lucide@0.468.0/dist/umd/lucide.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="assets/js/supabase.js"></script>
   <script src="assets/js/main.js"></script>
+  <script src="assets/js/catalogo.js"></script>
 </body>
 </html>

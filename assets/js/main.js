@@ -6,9 +6,11 @@
 (() => {
   'use strict';
 
+  const SITE_CONFIG = window.CRVSITE?.CONFIG || {};
+
   const CONFIG = {
-    adminUrl: 'https://victor-arnez-93.github.io/crv-imob-admin/',
-    whatsapp: '5515999999999',
+    adminUrl: SITE_CONFIG.adminUrl || 'https://painel.seudominio.com.br/',
+    whatsapp: SITE_CONFIG.fallbackWhatsApp || '5515999999999',
     whatsappGreeting: 'Olá! Vim pelo site e gostaria de conversar sobre imóveis.'
   };
 
@@ -21,6 +23,7 @@
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   document.addEventListener('DOMContentLoaded', init);
+  document.addEventListener('crv:organization-ready', updateOrganizationContact);
 
   function init() {
     initIcons();
@@ -144,6 +147,12 @@
       link.setAttribute('target', '_blank');
       link.setAttribute('rel', 'noopener');
     });
+  }
+
+  function updateOrganizationContact(event) {
+    const organization = event.detail || {};
+    CONFIG.whatsapp = organization.whatsapp || organization.phone || CONFIG.whatsapp;
+    initWhatsAppLinks();
   }
 
   function initPropertyCarousel() {
