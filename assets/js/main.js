@@ -7,7 +7,7 @@
   'use strict';
 
   const CONFIG = {
-    adminUrl: 'https://painel.seudominio.com.br/',
+    adminUrl: 'https://victor-arnez-93.github.io/crv-imob-admin/',
     whatsapp: '5515999999999',
     whatsappGreeting: 'Olá! Vim pelo site e gostaria de conversar sobre imóveis.'
   };
