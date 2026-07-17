@@ -23,7 +23,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Sora:wght@500;600;700&display=swap" rel="stylesheet">
-
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
   <link rel="stylesheet" href="assets/css/main.css?v=20260717-2">
 
   <script type="application/ld+json">
@@ -103,7 +103,7 @@
 
           <div class="hero-actions">
             <a class="button button-light" href="#imoveis">Conhecer oportunidades <i data-lucide="arrow-down-right"></i></a>
-            <a class="text-link text-link-light js-whatsapp" href="#" data-message="Olá! Vim pelo site e gostaria de conversar sobre imóveis em Tatuí e região.">Falar diretamente <i data-lucide="message-circle"></i></a>
+            <a class="text-link text-link-light js-whatsapp" href="#" data-message="Olá! Vim pelo site e gostaria de conversar sobre imóveis em Tatuí e região.">Falar diretamente <i class="fa-brands fa-whatsapp" aria-hidden="true"></i></a>
           </div>
         </div>
 
@@ -256,7 +256,7 @@
           <p>Conte o que você procura. A conversa começa sem compromisso e com a objetividade necessária para encontrar boas possibilidades.</p>
 
           <div class="contact-direct">
-            <a class="js-whatsapp" href="#" data-message="Olá! Vim pelo site e quero conversar sobre imóveis."><i data-lucide="message-circle"></i><span><small>WhatsApp</small><span data-organization-phone>(15) 99999-9999</span></span></a>
+            <a class="js-whatsapp" href="#" data-message="Olá! Vim pelo site e quero conversar sobre imóveis."><i class="fa-brands fa-whatsapp" aria-hidden="true"></i><span><small>WhatsApp</small><span data-organization-phone>(15) 99999-9999</span></span></a>
             <a href="mailto:contato@seudominio.com.br" data-organization-email><i data-lucide="mail"></i><span><small>E-mail</small><span data-contact-value>contato@seudominio.com.br</span></span></a>
           </div>
         </div>
@@ -284,29 +284,52 @@
   </main>
 
   <footer class="site-footer">
-    <div class="container footer-compact">
-      <div class="footer-legal">
-        <strong data-organization-name>Lucas Almeida Imóveis</strong>
-        <span>© <span id="currentYear">2026</span> <span data-organization-copyright>Lucas Almeida Imóveis. Todos os direitos reservados.</span></span>
-      </div>
+  <div class="container footer-compact">
+    <div class="footer-legal">
+      <strong data-organization-name>Lucas Almeida Imóveis</strong>
+      <span>
+        © <span id="currentYear">2026</span>
+        <span data-organization-copyright>Lucas Almeida Imóveis. Todos os direitos reservados.</span>
+      </span>
+    </div>
 
-      <div class="footer-partners" aria-label="Desenvolvimento e parceria">
-        <span class="footer-partners-label">Desenvolvido por</span>
+    <div class="footer-partners">
+      <p class="footer-partners-copy">
+        Desenvolvido por
+        <a href="https://crvsolucoesti.com/" target="_blank" rel="noopener noreferrer">
+          CRV Soluções em TI
+        </a>
+        <span>em parceria com</span>
+        <a href="https://conducaodigital.com.br/" target="_blank" rel="noopener noreferrer">
+          Condução Digital
+        </a>
+      </p>
 
+      <div class="footer-partner-logos">
         <a class="footer-partner footer-partner-crv" href="https://crvsolucoesti.com/" target="_blank" rel="noopener noreferrer" aria-label="Visitar CRV Soluções em TI">
-          <img src="assets/img/logo1.png" width="90" height="32" alt="CRV Soluções em TI" loading="lazy">
+          <img src="assets/img/logo1.png" width="84" height="30" alt="CRV Soluções em TI">
         </a>
 
-        <span class="footer-partners-separator">em parceria com</span>
-
         <a class="footer-partner footer-partner-conducao" href="https://conducaodigital.com.br/" target="_blank" rel="noopener noreferrer" aria-label="Visitar Condução Digital">
-          <img src="assets/img/logo2.png" width="38" height="38" alt="Condução Digital" loading="lazy">
+          <img src="assets/img/logo2.png" width="34" height="34" alt="Condução Digital">
         </a>
       </div>
     </div>
-  </footer>
+  </div>
+</footer>
 
-  <a class="whatsapp-float js-whatsapp" href="#" data-message="Olá! Vim pelo site e gostaria de conversar sobre imóveis." aria-label="Falar pelo WhatsApp"><i data-lucide="message-circle"></i><span>Fale comigo</span></a>
+<div class="floating-actions">
+  <a class="back-to-top" href="#inicio" aria-label="Voltar ao topo">
+    <i data-lucide="arrow-up"></i>
+  </a>
+
+  <a class="whatsapp-float js-whatsapp"
+     href="#"
+     data-message="Olá! Vim pelo site e gostaria de conversar sobre imóveis."
+     aria-label="Falar pelo WhatsApp">
+    <i class="fa-brands fa-whatsapp" aria-hidden="true"></i>
+  </a>
+</div>
 
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
