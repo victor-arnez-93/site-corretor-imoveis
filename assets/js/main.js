@@ -7,6 +7,7 @@
   'use strict';
 
   const CONFIG = {
+    adminUrl: 'https://painel.seudominio.com.br/',
     whatsapp: '5515999999999',
     whatsappGreeting: 'Olá! Vim pelo site e gostaria de conversar sobre imóveis.'
   };
@@ -25,9 +26,11 @@
     initIcons();
     initHeader();
     initMobileMenu();
+    initAdminLinks();
     initSmoothAnchors();
     initActiveNavigation();
     initWhatsAppLinks();
+    initPropertyCarousel();
     initContactForm();
     initAccordion();
     initImageFallbacks();
@@ -88,7 +91,7 @@
     document.querySelectorAll('a[href^="#"]').forEach((link) => {
       link.addEventListener('click', (event) => {
         const id = link.getAttribute('href');
-        if (!id || id === '#') return;
+        if (!id || id === '#' || !id.startsWith('#')) return;
 
         const target = document.querySelector(id);
         if (!target) return;
@@ -125,6 +128,12 @@
     return String(value || '').replace(/\D/g, '');
   }
 
+  function initAdminLinks() {
+    document.querySelectorAll('.js-admin-link').forEach((link) => {
+      link.setAttribute('href', CONFIG.adminUrl);
+    });
+  }
+
   function whatsappUrl(message) {
     return `https://wa.me/${onlyNumbers(CONFIG.whatsapp)}?text=${encodeURIComponent(message || CONFIG.whatsappGreeting)}`;
   }
@@ -135,6 +144,138 @@
       link.setAttribute('target', '_blank');
       link.setAttribute('rel', 'noopener');
     });
+  }
+
+  function initPropertyCarousel() {
+    const carousel = document.getElementById('propertiesCarousel');
+    if (!carousel) return;
+
+    const viewport = carousel.querySelector('[data-carousel-viewport]');
+    const track = carousel.querySelector('[data-carousel-track]');
+    const previousButton = carousel.querySelector('[data-carousel-prev]');
+    const nextButton = carousel.querySelector('[data-carousel-next]');
+    const dotsContainer = document.querySelector('[data-carousel-dots]');
+    const counter = document.querySelector('[data-carousel-counter]');
+
+    if (!viewport || !track) return;
+
+    let cards = [];
+    let currentIndex = 0;
+    let lastRenderedSteps = 0;
+    let scrollFrame;
+
+    const getGap = () => {
+      const styles = window.getComputedStyle(track);
+      return Number.parseFloat(styles.columnGap || styles.gap) || 0;
+    };
+
+    const getVisibleCards = () => {
+      const firstCard = cards[0];
+      if (!firstCard) return 1;
+
+      return Math.max(1, Math.round((viewport.clientWidth + getGap()) / (firstCard.offsetWidth + getGap())));
+    };
+
+    const getTotalSteps = () => Math.max(1, cards.length - getVisibleCards() + 1);
+
+    const updateControls = () => {
+      const totalSteps = getTotalSteps();
+      currentIndex = Math.min(currentIndex, totalSteps - 1);
+
+      previousButton?.toggleAttribute('disabled', currentIndex === 0);
+      nextButton?.toggleAttribute('disabled', currentIndex >= totalSteps - 1);
+      carousel.classList.toggle('is-static', totalSteps === 1);
+
+      dotsContainer?.querySelectorAll('button').forEach((dot, index) => {
+        const isActive = index === currentIndex;
+        dot.classList.toggle('is-active', isActive);
+        dot.setAttribute('aria-current', isActive ? 'true' : 'false');
+      });
+
+      if (counter) {
+        counter.textContent = `${String(Math.min(currentIndex + 1, cards.length)).padStart(2, '0')} / ${String(cards.length).padStart(2, '0')}`;
+      }
+    };
+
+    const renderDots = () => {
+      const totalSteps = getTotalSteps();
+      if (!dotsContainer || totalSteps === lastRenderedSteps) return;
+
+      lastRenderedSteps = totalSteps;
+      dotsContainer.replaceChildren();
+
+      for (let index = 0; index < totalSteps; index += 1) {
+        const dot = document.createElement('button');
+        dot.type = 'button';
+        dot.setAttribute('aria-label', `Ir para o destaque ${index + 1}`);
+        dot.addEventListener('click', () => goTo(index));
+        dotsContainer.appendChild(dot);
+      }
+    };
+
+    const goTo = (index, behavior = reducedMotion ? 'auto' : 'smooth') => {
+      const totalSteps = getTotalSteps();
+      currentIndex = Math.max(0, Math.min(index, totalSteps - 1));
+      const targetCard = cards[currentIndex];
+
+      if (targetCard) {
+        viewport.scrollTo({ left: targetCard.offsetLeft, behavior });
+      }
+
+      updateControls();
+    };
+
+    const findCurrentIndex = () => {
+      if (!cards.length) return 0;
+
+      return cards.reduce((closestIndex, card, index) => {
+        const closestDistance = Math.abs(cards[closestIndex].offsetLeft - viewport.scrollLeft);
+        const currentDistance = Math.abs(card.offsetLeft - viewport.scrollLeft);
+        return currentDistance < closestDistance ? index : closestIndex;
+      }, 0);
+    };
+
+    const refresh = () => {
+      cards = [...track.querySelectorAll('.property-card')];
+      lastRenderedSteps = 0;
+      renderDots();
+      goTo(Math.min(currentIndex, getTotalSteps() - 1), 'auto');
+    };
+
+    previousButton?.addEventListener('click', () => goTo(currentIndex - 1));
+    nextButton?.addEventListener('click', () => goTo(currentIndex + 1));
+
+    viewport.addEventListener('scroll', () => {
+      window.cancelAnimationFrame(scrollFrame);
+      scrollFrame = window.requestAnimationFrame(() => {
+        currentIndex = Math.min(findCurrentIndex(), getTotalSteps() - 1);
+        updateControls();
+      });
+    }, { passive: true });
+
+    viewport.addEventListener('keydown', (event) => {
+      if (event.key === 'ArrowLeft') {
+        event.preventDefault();
+        goTo(currentIndex - 1);
+      }
+
+      if (event.key === 'ArrowRight') {
+        event.preventDefault();
+        goTo(currentIndex + 1);
+      }
+    });
+
+    if ('ResizeObserver' in window) {
+      const resizeObserver = new ResizeObserver(refresh);
+      resizeObserver.observe(viewport);
+    } else {
+      window.addEventListener('resize', refresh, { passive: true });
+    }
+
+    const mutationObserver = new MutationObserver(refresh);
+    mutationObserver.observe(track, { childList: true });
+
+    refresh();
   }
 
   function initContactForm() {

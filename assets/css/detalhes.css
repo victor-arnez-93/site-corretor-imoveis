@@ -1,5 +1,10 @@
 .detail-page {
-  background: var(--porcelain);
+  background-color: var(--porcelain);
+  background-image:
+    linear-gradient(rgba(240, 244, 239, .89), rgba(240, 244, 239, .89)),
+    var(--light-background-image);
+  background-position: center;
+  background-size: cover;
 }
 
 .detail-page .site-header {
@@ -301,7 +306,7 @@
   padding: 31px;
   border: 1px solid var(--line);
   border-radius: var(--radius-lg);
-  background: var(--white);
+  background: rgba(255, 255, 255, .84);
   box-shadow: var(--shadow);
 }
 
@@ -381,7 +386,12 @@
 
 .detail-location-section {
   padding: 95px 0;
-  background: var(--white);
+  background-color: var(--white);
+  background-image:
+    linear-gradient(rgba(255, 255, 255, .88), rgba(255, 255, 255, .88)),
+    var(--light-background-image);
+  background-position: center;
+  background-size: cover;
 }
 
 .location-card {
@@ -390,7 +400,7 @@
   overflow: hidden;
   border: 1px solid var(--line);
   border-radius: var(--radius-lg);
-  background: var(--porcelain);
+  background: rgba(240, 244, 239, .88);
 }
 
 .location-copy {
@@ -441,9 +451,13 @@
   min-height: 430px;
   place-items: center;
   overflow: hidden;
-  background:
+  background-color: var(--blue);
+  background-image:
     radial-gradient(circle at 25% 25%, rgba(4, 139, 168, .6), transparent 28%),
-    linear-gradient(145deg, #0a4866, var(--blue));
+    linear-gradient(rgba(1, 25, 54, .76), rgba(1, 25, 54, .88)),
+    var(--dark-background-image);
+  background-position: center;
+  background-size: cover;
   color: var(--white);
 }
 

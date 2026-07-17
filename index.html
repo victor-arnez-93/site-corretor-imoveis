@@ -66,7 +66,13 @@
         <a href="#contato">Contato</a>
       </nav>
 
-      <a class="button button-sm header-cta" href="#contato">Agendar conversa <i data-lucide="arrow-up-right"></i></a>
+      <div class="header-actions">
+        <a class="restricted-link js-admin-link" href="#" aria-label="Acessar a área restrita">
+          <i data-lucide="lock-keyhole"></i>
+          <span>Área restrita</span>
+        </a>
+        <a class="button button-sm header-cta" href="#contato">Agendar conversa <i data-lucide="arrow-up-right"></i></a>
+      </div>
 
       <button class="menu-toggle" id="menuToggle" type="button" aria-label="Abrir menu" aria-expanded="false" aria-controls="mobileNav">
         <span></span><span></span>
@@ -79,6 +85,7 @@
       <a href="#metodo">Como trabalho</a>
       <a href="#sobre">Sobre</a>
       <a href="#contato">Contato</a>
+      <a class="mobile-restricted-link js-admin-link" href="#"><i data-lucide="lock-keyhole"></i> Área restrita</a>
       <a class="button" href="#contato">Agendar conversa</a>
     </nav>
   </header>
@@ -126,12 +133,18 @@
         <div class="section-heading section-heading-split reveal-up">
           <div>
             <span class="eyebrow"><span></span> Seleção especial</span>
-            <h2 id="propertiesTitle">Três oportunidades.<br><em>Três formas de viver bem.</em></h2>
+            <h2 id="propertiesTitle">Oportunidades escolhidas.<br><em>Novos jeitos de viver bem.</em></h2>
           </div>
-          <p>Uma seleção enxuta para você olhar com calma, comparar o que realmente importa e avançar com segurança.</p>
+          <p>Explore os destaques, compare o que realmente importa e avance com segurança na sua próxima escolha.</p>
         </div>
 
-        <div class="property-grid">
+        <div class="properties-carousel reveal-up" id="propertiesCarousel" aria-label="Imóveis em destaque">
+          <button class="carousel-arrow carousel-arrow-prev" type="button" aria-label="Ver imóveis anteriores" data-carousel-prev>
+            <i data-lucide="arrow-left"></i>
+          </button>
+
+          <div class="properties-viewport" data-carousel-viewport tabindex="0">
+            <div class="property-grid" data-carousel-track>
           <article class="property-card property-card-featured reveal-up">
             <a class="property-media" href="detalhes/imovel1.html" aria-label="Conhecer Residência Aurora">
               <img src="assets/img/fotocasa1.png" alt="Fachada da Residência Aurora" loading="lazy">
@@ -197,6 +210,17 @@
               </div>
             </div>
           </article>
+            </div>
+          </div>
+
+          <button class="carousel-arrow carousel-arrow-next" type="button" aria-label="Ver próximos imóveis" data-carousel-next>
+            <i data-lucide="arrow-right"></i>
+          </button>
+        </div>
+
+        <div class="carousel-status" aria-label="Navegação dos destaques">
+          <div class="carousel-dots" data-carousel-dots></div>
+          <span class="carousel-counter" data-carousel-counter>01 / 01</span>
         </div>
       </div>
     </section>
