@@ -1,6 +1,6 @@
 /* ============================================================
-   CRV IMOB — CATÁLOGO.JS
-   Organização pública · Imóveis publicados · Carrossel dinâmico
+   CRV IMOB â€” CATÃLOGO.JS
+   OrganizaÃ§Ã£o pÃºblica Â· ImÃ³veis publicados Â· Carrossel dinÃ¢mico
    ============================================================ */
 
 (() => {
@@ -12,12 +12,13 @@
     const track = document.querySelector('[data-carousel-track]');
     const state = document.getElementById('catalogState');
     const carousel = document.getElementById('propertiesCarousel');
+    const carouselStatus = document.querySelector('.carousel-status');
 
     if (!track || !window.CRVSITE) return;
 
     try {
       if (!window.CRVSITE.isReady) {
-        throw new Error('Conexão pendente: informe a chave pública do Supabase em assets/js/supabase.js.');
+        throw new Error('ConexÃ£o pendente: informe a chave pÃºblica do Supabase em assets/js/supabase.js.');
       }
 
       const organization = await window.CRVSITE.getOrganization();
@@ -29,7 +30,16 @@
 
       if (!properties.length) {
         track.replaceChildren();
-        showState(state, 'Nenhum imóvel publicado', 'Assim que um imóvel for publicado no painel, ele aparecerá automaticamente aqui.', 'building-2');
+        toggleCatalog(false, carousel, carouselStatus);
+        showState(state, {
+          variant: 'empty',
+          eyebrow: 'Novidades em breve',
+          title: 'Estamos preparando novas oportunidades',
+          message: 'Novos imÃ³veis serÃ£o publicados aqui em breve. Enquanto isso, conte o que vocÃª procura e receba um atendimento personalizado.',
+          icon: 'building-2',
+          actionLabel: 'Contar o que procuro',
+          actionHref: '#contato'
+        });
         return;
       }
 
@@ -37,13 +47,23 @@
         .map((property, index) => createPropertyCard(property, index, organization))
         .join('');
 
+      toggleCatalog(true, carousel, carouselStatus);
       hideState(state);
       initDynamicImageFallbacks(track);
       refreshVisualLibraries();
     } catch (error) {
       track.replaceChildren();
-      showState(state, 'Catálogo temporariamente indisponível', error.message || 'Não foi possível carregar os imóveis agora.', 'circle-alert');
-      console.error('[CRV Imob] Falha ao carregar catálogo:', error);
+      toggleCatalog(false, carousel, carouselStatus);
+      showState(state, {
+        variant: 'error',
+        eyebrow: 'AtualizaÃ§Ã£o em andamento',
+        title: 'Os destaques nÃ£o puderam ser exibidos agora',
+        message: 'VocÃª ainda pode falar diretamente com nossa equipe e receber as oportunidades disponÃ­veis.',
+        icon: 'refresh-cw',
+        actionLabel: 'Falar com um especialista',
+        actionHref: '#contato'
+      });
+      console.error('[CRV Imob] Falha ao carregar catÃ¡logo:', error);
     } finally {
       carousel?.classList.remove('is-catalog-loading');
     }
@@ -52,9 +72,9 @@
   function createPropertyCard(property, index, organization) {
     const detailUrl = `detalhes/imovel.html?slug=${encodeURIComponent(property.slug)}`;
     const bedrooms = property.suites > 0
-      ? `${formatNumber(property.suites)} ${plural(property.suites, 'suíte', 'suítes')}`
-      : `${formatNumber(property.bedrooms)} ${plural(property.bedrooms, 'dormitório', 'dormitórios')}`;
-    const area = `${formatNumber(property.area_m2)} m²`;
+      ? `${formatNumber(property.suites)} ${plural(property.suites, 'suÃ­te', 'suÃ­tes')}`
+      : `${formatNumber(property.bedrooms)} ${plural(property.bedrooms, 'dormitÃ³rio', 'dormitÃ³rios')}`;
+    const area = `${formatNumber(property.area_m2)} mÂ²`;
     const parking = `${formatNumber(property.parking_spaces)} ${plural(property.parking_spaces, 'vaga', 'vagas')}`;
     const badge = property.is_featured ? 'Destaque' : property.property_type;
     const image = property.coverUrl
@@ -65,16 +85,16 @@
       <article class="property-card reveal-up">
         <a class="property-media" href="${detailUrl}" aria-label="Conhecer ${escapeAttribute(property.title)}">
           ${image}
-          <span class="image-fallback"><i data-lucide="image"></i> Imagem em atualização</span>
+          <span class="image-fallback"><i data-lucide="image"></i> Imagem em atualizaÃ§Ã£o</span>
           <span class="property-index">${String(index + 1).padStart(2, '0')}</span>
           <span class="property-badge">${escapeHtml(badge || property.purpose)}</span>
         </a>
         <div class="property-body">
-          <div class="property-location"><i data-lucide="map-pin"></i>${escapeHtml(property.location || 'Localização sob consulta')}</div>
+          <div class="property-location"><i data-lucide="map-pin"></i>${escapeHtml(property.location || 'LocalizaÃ§Ã£o sob consulta')}</div>
           <h3><a href="${detailUrl}">${escapeHtml(property.title)}</a></h3>
-          <ul class="property-specs" aria-label="Características">
+          <ul class="property-specs" aria-label="CaracterÃ­sticas">
             <li><strong>${escapeHtml(bedrooms.split(' ')[0])}</strong> ${escapeHtml(bedrooms.split(' ').slice(1).join(' '))}</li>
-            <li><strong>${escapeHtml(area)}</strong> construídos</li>
+            <li><strong>${escapeHtml(area)}</strong> construÃ­dos</li>
             <li><strong>${escapeHtml(parking.split(' ')[0])}</strong> ${escapeHtml(parking.split(' ').slice(1).join(' '))}</li>
           </ul>
           <div class="property-footer">
@@ -100,7 +120,7 @@
     });
 
     document.querySelectorAll('.brand').forEach((element) => {
-      element.setAttribute('aria-label', `${organization.name} — início`);
+      element.setAttribute('aria-label', `${organization.name} â€” inÃ­cio`);
     });
 
     document.querySelectorAll('[data-organization-description]').forEach((element) => {
@@ -125,7 +145,7 @@
       });
     }
 
-    document.title = `${organization.name} | Imóveis selecionados`;
+    document.title = `${organization.name} | ImÃ³veis selecionados`;
   }
 
   function notifyOrganizationReady(organization) {
@@ -134,15 +154,40 @@
     }));
   }
 
-  function showState(container, title, message, icon) {
+  function toggleCatalog(isVisible, carousel, carouselStatus) {
+    if (carousel) carousel.hidden = !isVisible;
+    if (carouselStatus) carouselStatus.hidden = !isVisible;
+  }
+
+  function showState(container, options) {
     if (!container) return;
 
+    const {
+      variant = 'empty',
+      eyebrow = '',
+      title = '',
+      message = '',
+      icon = 'building-2',
+      actionLabel = '',
+      actionHref = '#contato'
+    } = options;
+
     container.hidden = false;
+    container.className = `catalog-state catalog-state-${variant}`;
     container.innerHTML = `
-      <i data-lucide="${icon}"></i>
-      <div>
+      <div class="catalog-state-icon" aria-hidden="true">
+        <i data-lucide="${escapeAttribute(icon)}"></i>
+      </div>
+      <div class="catalog-state-copy">
+        ${eyebrow ? `<span>${escapeHtml(eyebrow)}</span>` : ''}
         <strong>${escapeHtml(title)}</strong>
         <p>${escapeHtml(message)}</p>
+        ${actionLabel ? `
+          <a class="catalog-state-action" href="${escapeAttribute(actionHref)}">
+            ${escapeHtml(actionLabel)}
+            <i data-lucide="arrow-up-right"></i>
+          </a>
+        ` : ''}
       </div>
     `;
     refreshVisualLibraries();
@@ -151,6 +196,7 @@
   function hideState(container) {
     if (!container) return;
     container.hidden = true;
+    container.className = 'catalog-state';
     container.replaceChildren();
   }
 
