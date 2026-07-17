@@ -1,6 +1,6 @@
 /* ============================================================
-   CRV IMOB â€” CATÃLOGO.JS
-   OrganizaÃ§Ã£o pÃºblica Â· ImÃ³veis publicados Â· Carrossel dinÃ¢mico
+   CRV IMOB — CATÁLOGO.JS
+   Organização pública · Imóveis publicados · Carrossel dinâmico
    ============================================================ */
 
 (() => {
@@ -18,7 +18,7 @@
 
     try {
       if (!window.CRVSITE.isReady) {
-        throw new Error('ConexÃ£o pendente: informe a chave pÃºblica do Supabase em assets/js/supabase.js.');
+        throw new Error('Conexão pendente: informe a chave pública do Supabase em assets/js/supabase.js.');
       }
 
       const organization = await window.CRVSITE.getOrganization();
@@ -35,7 +35,7 @@
           variant: 'empty',
           eyebrow: 'Novidades em breve',
           title: 'Estamos preparando novas oportunidades',
-          message: 'Novos imÃ³veis serÃ£o publicados aqui em breve. Enquanto isso, conte o que vocÃª procura e receba um atendimento personalizado.',
+          message: 'Novos imóveis serão publicados aqui em breve. Enquanto isso, conte o que você procura e receba um atendimento personalizado.',
           icon: 'building-2',
           actionLabel: 'Contar o que procuro',
           actionHref: '#contato'
@@ -56,14 +56,14 @@
       toggleCatalog(false, carousel, carouselStatus);
       showState(state, {
         variant: 'error',
-        eyebrow: 'AtualizaÃ§Ã£o em andamento',
-        title: 'Os destaques nÃ£o puderam ser exibidos agora',
-        message: 'VocÃª ainda pode falar diretamente com nossa equipe e receber as oportunidades disponÃ­veis.',
+        eyebrow: 'Atualização em andamento',
+        title: 'Os destaques não puderam ser exibidos agora',
+        message: 'Você ainda pode falar diretamente com nossa equipe e receber as oportunidades disponíveis.',
         icon: 'refresh-cw',
         actionLabel: 'Falar com um especialista',
         actionHref: '#contato'
       });
-      console.error('[CRV Imob] Falha ao carregar catÃ¡logo:', error);
+      console.error('[CRV Imob] Falha ao carregar catálogo:', error);
     } finally {
       carousel?.classList.remove('is-catalog-loading');
     }
@@ -72,9 +72,9 @@
   function createPropertyCard(property, index, organization) {
     const detailUrl = `detalhes/imovel.html?slug=${encodeURIComponent(property.slug)}`;
     const bedrooms = property.suites > 0
-      ? `${formatNumber(property.suites)} ${plural(property.suites, 'suÃ­te', 'suÃ­tes')}`
-      : `${formatNumber(property.bedrooms)} ${plural(property.bedrooms, 'dormitÃ³rio', 'dormitÃ³rios')}`;
-    const area = `${formatNumber(property.area_m2)} mÂ²`;
+      ? `${formatNumber(property.suites)} ${plural(property.suites, 'suíte', 'suítes')}`
+      : `${formatNumber(property.bedrooms)} ${plural(property.bedrooms, 'dormitório', 'dormitórios')}`;
+    const area = `${formatNumber(property.area_m2)} m²`;
     const parking = `${formatNumber(property.parking_spaces)} ${plural(property.parking_spaces, 'vaga', 'vagas')}`;
     const badge = property.is_featured ? 'Destaque' : property.property_type;
     const image = property.coverUrl
@@ -85,16 +85,16 @@
       <article class="property-card reveal-up">
         <a class="property-media" href="${detailUrl}" aria-label="Conhecer ${escapeAttribute(property.title)}">
           ${image}
-          <span class="image-fallback"><i data-lucide="image"></i> Imagem em atualizaÃ§Ã£o</span>
+          <span class="image-fallback"><i data-lucide="image"></i> Imagem em atualização</span>
           <span class="property-index">${String(index + 1).padStart(2, '0')}</span>
           <span class="property-badge">${escapeHtml(badge || property.purpose)}</span>
         </a>
         <div class="property-body">
-          <div class="property-location"><i data-lucide="map-pin"></i>${escapeHtml(property.location || 'LocalizaÃ§Ã£o sob consulta')}</div>
+          <div class="property-location"><i data-lucide="map-pin"></i>${escapeHtml(property.location || 'Localização sob consulta')}</div>
           <h3><a href="${detailUrl}">${escapeHtml(property.title)}</a></h3>
-          <ul class="property-specs" aria-label="CaracterÃ­sticas">
+          <ul class="property-specs" aria-label="Características">
             <li><strong>${escapeHtml(bedrooms.split(' ')[0])}</strong> ${escapeHtml(bedrooms.split(' ').slice(1).join(' '))}</li>
-            <li><strong>${escapeHtml(area)}</strong> construÃ­dos</li>
+            <li><strong>${escapeHtml(area)}</strong> construídos</li>
             <li><strong>${escapeHtml(parking.split(' ')[0])}</strong> ${escapeHtml(parking.split(' ').slice(1).join(' '))}</li>
           </ul>
           <div class="property-footer">
@@ -120,7 +120,7 @@
     });
 
     document.querySelectorAll('.brand').forEach((element) => {
-      element.setAttribute('aria-label', `${organization.name} â€” inÃ­cio`);
+      element.setAttribute('aria-label', `${organization.name} — início`);
     });
 
     document.querySelectorAll('[data-organization-description]').forEach((element) => {
@@ -145,7 +145,7 @@
       });
     }
 
-    document.title = `${organization.name} | ImÃ³veis selecionados`;
+    document.title = `${organization.name} | Imóveis selecionados`;
   }
 
   function notifyOrganizationReady(organization) {
